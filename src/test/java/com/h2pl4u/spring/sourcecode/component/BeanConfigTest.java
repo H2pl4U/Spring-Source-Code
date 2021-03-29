@@ -1,5 +1,6 @@
 package com.h2pl4u.spring.sourcecode.component;
 
+import com.h2pl4u.spring.sourcecode.entity.BlueColor;
 import com.h2pl4u.spring.sourcecode.entity.PersonEntity;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,17 +21,17 @@ public class BeanConfigTest {
     public void BeanTest() {
         ApplicationContext applicationContext = new AnnotationConfigApplicationContext(BeanConfig.class);
         PersonEntity jjf = (PersonEntity) applicationContext.getBean("jjf");
-        PersonEntity jbh = (PersonEntity) applicationContext.getBean("jbh");
+        PersonEntity lbw = (PersonEntity) applicationContext.getBean("lbw");
         System.out.println(jjf);
-        System.out.println(jbh);
+        System.out.println(lbw);
     }
 
     @Test
     public void BeanImportTest() {
         printBeans(applicationContext);
+        BlueColor bean = applicationContext.getBean(BlueColor.class);
+        System.out.println(bean);
     }
-
-
 
     @Test
     public void ComponentScanTest() {
@@ -42,5 +43,16 @@ public class BeanConfigTest {
         for (String name : beanDefinitionNames) {
             System.out.println(name);
         }
+    }
+
+    @Test
+    public void BeanFactoryTest() {
+        printBeans(applicationContext);
+        //工厂bean获取的是调用getObject方法创建的对象
+        Object bean1 = applicationContext.getBean("colorFactoryBean");
+        Object bean2 = applicationContext.getBean("colorFactoryBean");
+        Object bean3 = applicationContext.getBean("&colorFactoryBean");
+        System.out.println(bean1 == bean2);
+        System.out.println(bean3.getClass());
     }
 }

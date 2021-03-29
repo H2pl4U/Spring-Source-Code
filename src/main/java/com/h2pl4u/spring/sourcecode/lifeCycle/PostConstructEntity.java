@@ -1,5 +1,8 @@
-package com.h2pl4u.spring.sourcecode.entity;
+package com.h2pl4u.spring.sourcecode.lifeCycle;
 
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -11,7 +14,9 @@ import javax.annotation.PreDestroy;
  * @Author Liuwei
  */
 @Component
-public class PostConstructEntity {
+public class PostConstructEntity implements ApplicationContextAware {
+    private ApplicationContext applicationContext;
+
     public PostConstructEntity() {
         System.out.println("postConstruct constructor...");
     }
@@ -25,10 +30,15 @@ public class PostConstructEntity {
     }
 
     /**
-     * 容器清理对象之前调用
+     * 容器移除对象之前调用
      */
     @PreDestroy
     public void destory() {
         System.out.println("@PreDestroy...");
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        this.applicationContext = applicationContext;
     }
 }

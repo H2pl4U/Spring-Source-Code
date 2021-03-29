@@ -32,5 +32,6 @@ public class PersonEntity {
         this.age = age;
         this.sex = sex;
         this.phone = phone;
+        System.out.println("person Constructor...");
     }
 }

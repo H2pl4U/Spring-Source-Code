@@ -1,4 +1,4 @@
-package com.h2pl4u.spring.sourcecode.entity;
+package com.h2pl4u.spring.sourcecode.lifeCycle;
 
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
