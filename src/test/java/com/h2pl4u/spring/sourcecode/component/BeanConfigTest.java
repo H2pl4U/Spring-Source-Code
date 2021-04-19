@@ -7,6 +7,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+import javax.sql.DataSource;
+import java.util.Map;
+
 /**
  * Created on 2021/3/26 13:57
  *
@@ -54,5 +57,15 @@ public class BeanConfigTest {
         Object bean3 = applicationContext.getBean("&colorFactoryBean");
         System.out.println(bean1 == bean2);
         System.out.println(bean3.getClass());
+    }
+
+    @Test
+    public void profileTest() {
+        AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(MainConfig4Profile.class);
+        String[] beanNamesForType = applicationContext.getBeanNamesForType(DataSource.class);
+        for (String name: beanNamesForType) {
+            System.out.println(name);
+        }
+        applicationContext.close();
     }
 }
