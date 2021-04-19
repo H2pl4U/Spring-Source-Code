@@ -14,9 +14,12 @@ import javax.sql.DataSource;
 
 /**
  * Profile:
- *      Spring提供的可根据当前环境动态的激活和切换一系列组件的功能
+ *  Spring提供的可根据当前环境动态的激活和切换一系列组件的功能
+ *
  * 开发环境/测试环境/生产环境
- * 1).加了环境标识的bean，只有被此环境被激活时才能注册到容器中，默认default
+ * 1).加了环境标识的bean，只有被此环境被激活时才能注册到容器中，默认default环境
+ * 2).写在配置类上只有这个环境时，整个配置类里面的所有配置才能开始生效
+ * 3).没有标注环境标识的bean在任何环境都是加载的
  */
 @PropertySource("classpath:/dbconfig.properties")
 @Configuration
