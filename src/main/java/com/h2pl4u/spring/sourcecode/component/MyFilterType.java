@@ -24,7 +24,7 @@ public class MyFilterType implements TypeFilter {
         //获取当前类资源(路径)
         Resource resource = metadataReader.getResource();
         String className = classMetadata.getClassName();
-        System.out.println("--------------->" + className);
+//        System.out.println("--------------->" + className);
         if (className.contains("er")) {
             return true;
         }

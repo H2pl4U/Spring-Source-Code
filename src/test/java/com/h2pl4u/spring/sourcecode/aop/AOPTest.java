@@ -16,7 +16,7 @@ public class AOPTest {
 //        mathCalculator.div(10, 5);
         //使用spring容器中的组件
         MathCalculator calculator = applicationContext.getBean(MathCalculator.class);
-        calculator.div(10, 0);
+        calculator.div(10, 2);
         applicationContext.close();
 
     }
