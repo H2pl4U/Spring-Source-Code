@@ -17,5 +17,6 @@ public class TranslateTest {
         AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(TranslateConfig.class);
         TranslateService translateService = applicationContext.getBean(TranslateService.class);
         translateService.insert();
+        applicationContext.close();
     }
 }
