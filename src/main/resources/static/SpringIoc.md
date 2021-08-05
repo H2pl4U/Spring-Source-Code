@@ -1220,7 +1220,7 @@ private final Map<String, Object> singletenObjects = new ConcurrentHashMap<>(256
     }
 ```
 
-### 12.this.finishRefresh()声明完成刷新
+### 12.this.finishRefresh()声明完成BeanFactory的初始化创建工作，此时IOC容器就创建完成
 
 ```java
 protected void finishRefresh() {
@@ -1245,7 +1245,9 @@ public void clearResourceCaches() {
 }
 ```
 
-2.this.initLifecycleProcessor()
+2.this.initLifecycleProcessor()；初始化和生命周期有关的后置处理器；
+
+​		默认从容器中找是否有lifecycleProcessor组件[LifecycleProcessor]，有的话加入到容器
 
 ```java
 	protected void initLifecycleProcessor() {
@@ -1267,11 +1269,12 @@ public void clearResourceCaches() {
                 this.logger.trace("No 'lifecycleProcessor' bean, using [" + this.lifecycleProcessor.getClass().getSimpleName() + "]");
             }
         }
-
     }
 ```
 
 3.this.getLifecycleProcessor().onRefresh();
+
+​	拿到之前定义的生命周期处理器(BeanFactory)，回调onRefresh
 
 ```java
 public void onRefresh() {
@@ -1280,7 +1283,7 @@ public void onRefresh() {
 }
 ```
 
-4.发布事件
+4.publishEvent((ApplicationEvent)(new ContextRefreshedEvent(this)));发布容器刷新完成事件
 
 ```java
 protected void publishEvent(Object event, @Nullable ResolvableType eventType) {
@@ -1317,33 +1320,36 @@ protected void publishEvent(Object event, @Nullable ResolvableType eventType) {
 
 至此，Spring容器的refresh()执行完成
 
+## 总结
 
+1.Spring容器在启动的时候，会先保存所有注册好的Bean的定义信息
 
+​			1) xml注册bean<bean>
 
+​			2) 通过注解注册Bean:@Service、@Component、@Bean、xxx
 
+2.Spring容器会在合适的时机创建这些Bean
 
+​			1) 用到某bean的时候，利用getBean创建bean，创建好后保存在容器中
 
+​			2) 统一创建剩下的所有bean，finishBeanFactoryInitialization(beanFactory)
 
+3.后置处理器
 
+​			1) 没一个bean创建完成，都会使用各种后置处理器进行处理，来增强bean的功能
 
+​					AutowiredAnnotationBeanPostProcessor:处理自动注入
 
+​					AnnotationAwareAspectJAutoProxyCreator:AOP功能
 
+​					xxx.....
 
+​					增强的功能注解:
 
+​					AsyncAnnotationBeanPostProcessor...
 
+4.事件驱动模型
 
+​			ApplicationListener 事件监听
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+​			ApplicationEventMulticaster:事件派发
